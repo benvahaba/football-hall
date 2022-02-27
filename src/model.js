@@ -1,17 +1,26 @@
+import * as constans from "./utils/constants";
+import React, { useState } from "react";
+
+export const state = { teamsInfo: [] };
+
 export async function getTeams() {
   try {
     const rawData = await fetch(
-      "https://api.football-data.org/v2/competitions/",
+      "https://api-football-v1.p.rapidapi.com/v3/teams?country=israel",
       {
-        dataType: "json",
-        type: "GET",
-        headers: { "X-Auth-Token": "aaafc54e607245309183c64ecd771125" },
-        mode: "no-cors",
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": constans.RAPIDAPI_HOST,
+          "x-rapidapi-key": constans.RAPIDAPI_KEY,
+        },
       }
     );
 
-    console.log(rawData);
+    const data = await rawData.json();
+    state.teamsInfo = data.response;
+    console.log("teams fetched", state.teamsInfo.length);
   } catch (e) {
+    //todo display Error
     console.log(e);
   }
 }
