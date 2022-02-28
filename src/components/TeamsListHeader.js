@@ -1,7 +1,7 @@
 import React from "react";
 import StyledTeamsListHeader from "./styles/TeamsListHeader.styled";
 
-function CountryListHeader() {
+function TeamsListHeader() {
   return (
     <StyledTeamsListHeader>
       <p>Name</p>
@@ -11,4 +11,4 @@ function CountryListHeader() {
   );
 }
 
-export default CountryListHeader;
+export default TeamsListHeader;

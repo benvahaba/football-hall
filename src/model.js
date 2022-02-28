@@ -1,5 +1,4 @@
 import * as constans from "./utils/constants";
-import React, { useState } from "react";
 
 export const state = { teamsInfo: [] };
 
