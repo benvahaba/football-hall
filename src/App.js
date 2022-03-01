@@ -2,11 +2,10 @@ import GlobalStyles from "./components/styles/Global";
 import Container from "./components/styles/Container.styled";
 import TeamsListContainer from "./components/TeamsListPage";
 import React, { useEffect, useState } from "react";
-import * as constans from "./utils/constants";
+
 import { Route, Routes, useNavigate } from "react-router-dom";
 import FocusedTeamPage from "./components/FocusedTeamPage";
-import axios from "axios";
-import * as constants from "./utils/constants";
+import axiosInstance from "./utils/axiosInstans";
 
 function App() {
   const [selectedTeam, setSelectedTeam] = useState(null);
@@ -14,15 +13,16 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    (function fetchTeams() {
-      axios(constants.url + constans.defaultCountry, {
-        headers: constants.headers,
-      })
+    function fetchTeams() {
+      axiosInstance
+        .get("teams/", { params: { country: "israel" } })
+
         .catch((error) => {
           Error(error.message);
         })
         .then((fetchedData) => setTeamsList(fetchedData.data.response));
-    })();
+    }
+    fetchTeams();
   }, []);
 
   function onTeamChosenHandle(team) {

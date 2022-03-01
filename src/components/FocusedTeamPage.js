@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import FlexedColumnContainer from "./FlexedColumnContainer";
 import FocusedTeamBody from "./FocusedTeamBody";
@@ -6,7 +5,7 @@ import FocusedTeamHeader from "./FocusedTeamHeader";
 import StyledBigImg from "./styles/BigImg.styled";
 import StyledFlexedVerticalContainer from "./styles/FlexedVerticalContainer.styles";
 import StyledFocusedTeamPage from "./styles/FocusedTeamPage.styled";
-import * as constants from "../utils/constants";
+import axiosInstance from "../utils/axiosInstans";
 import PlayerCard from "./PlayerCard";
 import PlayerImg from "./styles/PlayerImg.styles";
 
@@ -15,20 +14,15 @@ export default function FocusedTeamPage(props) {
 
   useEffect(() => {
     function getPlayersFromApi() {
-      const options = {
-        method: "GET",
-        url: "https://api-football-v1.p.rapidapi.com/v3/players/squads",
-        params: { team: props.selectedTeam.team.id },
-        headers: constants.headers,
-      };
-
-      axios
-        .request(options)
-        .then(function (response) {
-          setPlayers(response.data.response[0].players);
+      axiosInstance
+        .get("players/squads/", {
+          params: { team: props.selectedTeam.team.id },
         })
         .catch(function (error) {
           alert(error.message);
+        })
+        .then(function (response) {
+          setPlayers(response.data.response[0].players);
         });
     }
     getPlayersFromApi();
