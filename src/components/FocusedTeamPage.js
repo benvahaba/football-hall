@@ -7,9 +7,11 @@ import StyledBigImg from "./styles/BigImg.styled";
 import StyledFlexedVerticalContainer from "./styles/FlexedVerticalContainer.styles";
 import StyledFocusedTeamPage from "./styles/FocusedTeamPage.styled";
 import * as constants from "../utils/constants";
+import PlayerCard from "./PlayerCard";
+import PlayerImg from "./styles/PlayerImg.styles";
 
 export default function FocusedTeamPage(props) {
-  const [players, setPlayers] = useState(null);
+  const [players, setPlayers] = useState([]);
 
   useEffect(() => {
     function getPlayersFromApi() {
@@ -31,6 +33,10 @@ export default function FocusedTeamPage(props) {
     }
     getPlayersFromApi();
   }, []);
+
+  useEffect(() => {
+    console.log("players", players);
+  }, [players]);
 
   return (
     <StyledFocusedTeamPage>
@@ -77,6 +83,7 @@ export default function FocusedTeamPage(props) {
               </p>
             )}
           </FlexedColumnContainer>
+          {/* TODO ask Oz why it still shows */}
           {props.selectedTeam.venue.image && (
             <StyledBigImg
               src={props.selectedTeam.venue.image}
@@ -84,7 +91,21 @@ export default function FocusedTeamPage(props) {
             ></StyledBigImg>
           )}
         </StyledFlexedVerticalContainer>
-        <StyledFlexedVerticalContainer></StyledFlexedVerticalContainer>
+        <StyledFlexedVerticalContainer>
+          {players.map((player) => {
+            return (
+              <PlayerCard key={player.id}>
+                <PlayerImg src={player.photo} alt={player} />
+                <h4>{player.name}</h4>
+                {player.number && (
+                  <p>
+                    Number: <span>{player.number}</span>
+                  </p>
+                )}
+              </PlayerCard>
+            );
+          })}
+        </StyledFlexedVerticalContainer>
       </FocusedTeamBody>
     </StyledFocusedTeamPage>
   );
