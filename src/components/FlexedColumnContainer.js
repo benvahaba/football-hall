@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import StyledFlexedColumnContainer from "./styles/FlexedColumnContainer.styled";
 
 function FlexedColumnContainer(props) {

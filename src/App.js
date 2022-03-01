@@ -1,40 +1,28 @@
 import GlobalStyles from "./components/styles/Global";
 import Container from "./components/styles/Container.styled";
-import TeamsListContainer from "./components/TeamsListContainer";
+import TeamsListContainer from "./components/TeamsListPage";
 import React, { useEffect, useState } from "react";
 import * as constans from "./utils/constants";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import FocusedTeamPage from "./components/FocusedTeamPage";
+import axios from "axios";
+import * as constants from "./utils/constants";
 
 function App() {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [teamsList, setTeamsList] = useState([]);
   const navigate = useNavigate();
 
-  async function fetchTeams() {
-    try {
-      const rawData = await fetch(
-        "https://api-football-v1.p.rapidapi.com/v3/teams?country=israel",
-        {
-          method: "GET",
-          headers: {
-            "x-rapidapi-host": constans.RAPIDAPI_HOST,
-            "x-rapidapi-key": constans.RAPIDAPI_KEY,
-          },
-        }
-      );
-
-      const data = await rawData.json();
-      setTeamsList(data.response);
-      console.log("teams fetched", teamsList);
-    } catch (e) {
-      //todo display Error
-      console.log(e);
-    }
-  }
-
   useEffect(() => {
-    fetchTeams();
+    (function fetchTeams() {
+      axios(constants.url + constans.defaultCountry, {
+        headers: constants.headers,
+      })
+        .catch((error) => {
+          Error(error.message);
+        })
+        .then((fetchedData) => setTeamsList(fetchedData.data.response));
+    })();
   }, []);
 
   function onTeamChosenHandle(team) {
@@ -77,3 +65,22 @@ function App() {
 }
 
 export default App;
+
+// try {
+//   const rawData = await fetch(
+//     "https://api-football-v1.p.rapidapi.com/v3/teams?country=israel",
+//     {
+//       method: "GET",
+//       headers: {
+//         "x-rapidapi-host": constans.RAPIDAPI_HOST,
+//         "x-rapidapi-key": constans.RAPIDAPI_KEY,
+//       },
+//     }
+//   );
+//   const data = await rawData.json();
+//   setTeamsList(data.response);
+//   console.log("teams fetched", teamsList);
+// } catch (e) {
+//   //todo display Error
+//   console.log(e);
+// }

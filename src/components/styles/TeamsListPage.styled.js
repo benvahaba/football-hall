@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledTeamsListContainer = styled.div`
+const StyledTeamsListPage = styled.div`
   width: 50vw;
   position: relative;
   top: 20vh;
@@ -9,4 +9,4 @@ const StyledTeamsListContainer = styled.div`
   border: 1px solid black;
 `;
 
-export default StyledTeamsListContainer;
+export default StyledTeamsListPage;

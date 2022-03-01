@@ -1,12 +1,12 @@
 import React from "react";
-import StyledTeamsListContainer from "./styles/TeamsListContainer.styled";
+import StyledTeamsListPage from "./styles/TeamsListPage.styled";
 import TeamsListHeader from "./TeamsListHeader";
 import TeamsListBody from "./TeamsListBody";
 import TeamRowContainer from "./TeamRowContainer";
 
 function TeamsListContainer(props) {
   return (
-    <StyledTeamsListContainer>
+    <StyledTeamsListPage>
       <TeamsListHeader />
       <TeamsListBody>
         {props.teamsList.map((teamFromList) => {
@@ -19,7 +19,7 @@ function TeamsListContainer(props) {
           );
         })}
       </TeamsListBody>
-    </StyledTeamsListContainer>
+    </StyledTeamsListPage>
   );
 }
 
