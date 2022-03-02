@@ -4,7 +4,11 @@ const initialState = {
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case "UPDATE": {
+    case "NEW_TEAMS": {
+      return { teams: action.teams };
+    }
+    default: {
+      return state;
     }
   }
 }

@@ -1,29 +1,13 @@
 import GlobalStyles from "./components/styles/Global";
 import Container from "./components/styles/Container.styled";
-import TeamsListContainer from "./components/TeamsListPage";
+import TeamsListPage from "./components/TeamsListPage";
 import React, { useEffect, useState } from "react";
-
 import { Route, Routes, useNavigate } from "react-router-dom";
 import FocusedTeamPage from "./components/FocusedTeamPage";
-import axiosInstance from "./utils/axiosInstans";
 
 function App() {
   const [selectedTeam, setSelectedTeam] = useState(null);
-  const [teamsList, setTeamsList] = useState([]);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    function fetchTeams() {
-      axiosInstance
-        .get("teams/", { params: { country: "israel" } })
-
-        .catch((error) => {
-          Error(error.message);
-        })
-        .then((fetchedData) => setTeamsList(fetchedData.data.response));
-    }
-    fetchTeams();
-  }, []);
 
   function onTeamChosenHandle(team) {
     setSelectedTeam(team);
@@ -43,10 +27,9 @@ function App() {
           path={"/" | "/teams"}
           element={
             <Container>
-              <TeamsListContainer
-                teamsList={teamsList}
+              <TeamsListPage
                 onTeamChosenHandle={onTeamChosenHandle}
-              ></TeamsListContainer>
+              ></TeamsListPage>
             </Container>
           }
         />
