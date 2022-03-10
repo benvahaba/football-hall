@@ -1,32 +1,33 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes } from "react-router-dom";
 import routes from "./routes";
-import baseApi from "./api/baseApi";
 import getTeamByCountryNameApi from "./api/getTeamByCountryNameApi";
+import { createStore } from "redux";
+import reducer from "./store/reducer";
+import { Provider } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function App() {
-  useEffect(async () => {
+  const store = createStore(reducer);
+  const dispacher = useDispatch();
+
+  async function fetchTeams() {
     await getTeamByCountryNameApi("israel")
-      .then((data) => console.log("whatwhat", data))
+      .then((data) => {
+        dispacher({ type: "NEW_TEAMS", payload: data });
+        console.log(data);
+      })
       .catch((error) => {
         alert(error.message);
       });
-  }, []);
+  }
+  fetchTeams();
 
-  // const [selectedTeam, setSelectedTeam] = useState(null);
-  // const navigate = useNavigate();
-
-  // function onTeamChosenHandle(team) {
-  //   setSelectedTeam(team);
-  // }
-  // useEffect(() => {
-  //   if (selectedTeam !== null) {
-  //     navigate(`/teams/${selectedTeam.team.name}`);
-  //   }
-  // }, [selectedTeam]);
-
-  return <Routes>{routes()}</Routes>;
+  return (
+    <Provider store={store}>
+      <Routes>{routes()}</Routes>
+    </Provider>
+  );
 }
 
 export default App;

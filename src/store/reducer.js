@@ -1,11 +1,11 @@
 const initialState = {
-  teams: [],
+  payload: [],
 };
 
 function reducer(state = initialState, action) {
   switch (action.type) {
     case "NEW_TEAMS": {
-      return { teams: action.teams };
+      return { payload: action.payload };
     }
     default: {
       return state;

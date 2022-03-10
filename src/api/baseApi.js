@@ -11,5 +11,6 @@ const baseApi = axios.create({
   headers: headers,
 });
 baseApi.defaults.baseURL = url;
+baseApi.interceptors.response.use((res) => res.data.response);
 
 export default baseApi;
