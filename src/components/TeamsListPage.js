@@ -6,27 +6,34 @@ import TeamRowContainer from "./TeamRowContainer";
 import { useEffect } from "react";
 import axiosInstance from "../api/baseApi";
 import { useSelector, useDispatch } from "react-redux";
-import getTeamByCountryNameApi from "../api/getTeamByCountryNameApi";
+import { getTeamByCountryNameApi } from "../api/getTeamByCountryNameApi";
 import axios from "axios";
 
 function TeamsListPage(props) {
   const dispatch = useDispatch();
   const teamsList = useSelector((state) => state.teams);
+
   useEffect(() => {
+    getTeamByCountryNameApi("israel").then((data) => console.log(data));
+
     const headers = {
       "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
       "x-rapidapi-key": "2090935e6dmsh6b4ec261a027d74p181990jsneb7c4aece90b",
     };
-    const baseUrl = "https://api-football-v1.p.rapidapi.com/v3/";
+    const url = "https://api-football-v1.p.rapidapi.com/v3/";
 
     const baseApi = axios.create({
-      baseUrl: baseUrl,
+      baseUrl: url,
       headers: headers,
     });
-
-    baseApi.get("/teams", { params: { country: "israel" } }).then((res) => {
-      console.log(res);
-    });
+    baseApi
+      .get("teams/", { params: { country: "israel" } })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     // (async () => {
     //   try {
