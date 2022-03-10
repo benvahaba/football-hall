@@ -5,27 +5,22 @@ import FocusedTeamHeader from "./FocusedTeamHeader";
 import StyledBigImg from "./styles/BigImg.styled";
 import StyledFlexedVerticalContainer from "./styles/FlexedVerticalContainer.styles";
 import StyledFocusedTeamPage from "./styles/FocusedTeamPage.styled";
-import axiosInstance from "../utils/axiosInstans";
 import PlayerCard from "./PlayerCard";
 import PlayerImg from "./styles/PlayerImg.styles";
+import getTeamByIdApi from "../api/getPlayersByTeamIdApi";
 
 export default function FocusedTeamPage(props) {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
-    function getPlayersFromApi() {
-      axiosInstance
-        .get("players/squads/", {
-          params: { team: props.selectedTeam.team.id },
-        })
-        .catch(function (error) {
-          alert(error.message);
-        })
-        .then(function (response) {
-          setPlayers(response.data.response[0].players);
-        });
-    }
-    getPlayersFromApi();
+    console.log(props.selectedTeam.team.id);
+    getTeamByIdApi(props.selectedTeam.team.id)
+      .catch(function (error) {
+        alert(error.message);
+      })
+      .then(function (response) {
+        setPlayers(response.data.response[0].players);
+      });
   }, []);
 
   useEffect(() => {

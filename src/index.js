@@ -3,8 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-
+import GlobalStyles from "./components/styles/Global";
 import { createStore } from "redux";
 import reducer from "./store/reducer";
 import { Provider } from "react-redux";
@@ -13,6 +12,7 @@ const store = createStore(reducer);
 
 ReactDOM.render(
   <React.StrictMode>
+    <GlobalStyles />
     <Provider store={store}>
       <BrowserRouter>
         <App />
@@ -21,8 +21,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
