@@ -7,8 +7,9 @@ const headers = {
 const url = "https://api-football-v1.p.rapidapi.com/v3/";
 
 const baseApi = axios.create({
-  baseUrl: url,
+  // baseURL: url,
   headers: headers,
 });
+baseApi.defaults.baseURL = url;
 
 export default baseApi;

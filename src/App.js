@@ -2,27 +2,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import routes from "./routes";
+import baseApi from "./api/baseApi";
+import getTeamByCountryNameApi from "./api/getTeamByCountryNameApi";
 
 function App() {
-  useEffect(() => {
-    const headers = {
-      "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
-      "x-rapidapi-key": "2090935e6dmsh6b4ec261a027d74p181990jsneb7c4aece90b",
-    };
-    const url = "https://api-football-v1.p.rapidapi.com/v3/";
-
-    const baseApi = axios.create({
-      baseUrl: url,
-      headers: headers,
-    });
-
-    baseApi
-      .get("teams/", { params: { country: "israel" } })
-
+  useEffect(async () => {
+    await getTeamByCountryNameApi("israel")
+      .then((data) => console.log("whatwhat", data))
       .catch((error) => {
-        Error(error.message);
-      })
-      .then((fetchedData) => console.log(fetchedData.data.response));
+        alert(error.message);
+      });
   }, []);
 
   // const [selectedTeam, setSelectedTeam] = useState(null);

@@ -1,8 +1,9 @@
 import baseApi from "./baseApi";
 
-export const getTeamByCountryNameApi = async (countryName) =>
-  baseApi.get("teams/", {
+export default async function getTeamByCountryNameApi(countryName) {
+  return await baseApi.get("teams/", {
     params: {
       country: countryName,
     },
   });
+}
