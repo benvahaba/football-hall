@@ -18,9 +18,13 @@ function App() {
 
     baseApi
       .get("teams/", { params: { country: "israel" } })
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
+
+      .catch((error) => {
+        Error(error.message);
+      })
+      .then((fetchedData) => console.log(fetchedData.data.response));
   }, []);
+
   // const [selectedTeam, setSelectedTeam] = useState(null);
   // const navigate = useNavigate();
 
