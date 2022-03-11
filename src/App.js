@@ -15,12 +15,13 @@ function App() {
     await getTeamByCountryNameApi("israel")
       .then((data) => {
         dispacher({ type: "NEW_TEAMS", payload: data });
-        console.log(data);
+        console.log("data", data);
       })
       .catch((error) => {
         alert(error.message);
       });
   }
+
   fetchTeams();
 
   return (
