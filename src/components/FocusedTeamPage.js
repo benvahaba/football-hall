@@ -7,75 +7,95 @@ import StyledFlexedVerticalContainer from "./styles/FlexedVerticalContainer.styl
 import StyledFocusedTeamPage from "./styles/FocusedTeamPage.styled";
 import PlayerCard from "./PlayerCard";
 import PlayerImg from "./styles/PlayerImg.styles";
-import getTeamByIdApi from "../api/getPlayersByTeamIdApi";
+import getPlayersByTeamIdApi from "../api/getPlayersByTeamIdApi";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function FocusedTeamPage(props) {
   const [players, setPlayers] = useState([]);
+  const teamId = useParams(null);
+  const teams = useSelector((state) => state.payload);
+  const [teamAndVenue, setTeamAndVenue] = useState(null);
 
   useEffect(() => {
-    console.log(props.selectedTeam.team.id);
-    getTeamByIdApi(props.selectedTeam.team.id)
-      .catch(function (error) {
-        alert(error.message);
+    if (teamId === null) return;
+
+    setTeamAndVenue(
+      teams.find((teamFromList) => teamFromList.team.id == teamId.id)
+    );
+
+    getPlayersByTeamId(teamId);
+  }, [teamId]);
+
+  async function getPlayersByTeamId(id) {
+    await getPlayersByTeamIdApi(id.id)
+      .then((response) => {
+        console.log("response", response);
+        setPlayers(response[0].players);
       })
-      .then(function (response) {
-        setPlayers(response.data.response[0].players);
+      .catch(function (error) {
+        alert(error);
       });
-  }, []);
+  }
 
   useEffect(() => {
-    console.log("players", players);
-  }, [players]);
+    console.log("teamAndVenue", teamAndVenue);
+  }, [teamAndVenue]);
 
   return (
     <StyledFocusedTeamPage>
-      <FocusedTeamHeader
-        name={props.selectedTeam.team.name}
-        logo={props.selectedTeam.team.logo}
-      ></FocusedTeamHeader>
+      {teamAndVenue ? (
+        <FocusedTeamHeader
+          name={teamAndVenue.team.name}
+          logo={teamAndVenue.team.logo}
+        ></FocusedTeamHeader>
+      ) : (
+        <></>
+      )}
+
       <FocusedTeamBody>
         <StyledFlexedVerticalContainer>
           <FlexedColumnContainer>
             <h3>Team info</h3>
-            {props.selectedTeam.team.country && (
+            {teamAndVenue.team.country && (
               <p>
-                Country: <span>{props.selectedTeam.team.country}</span>
+                Country: <span>{teamAndVenue.team.country}</span>
               </p>
             )}
-            {props.selectedTeam.team.founded && (
+            {teamAndVenue.team.founded && (
               <p>
-                Founded: <span>{props.selectedTeam.team.founded}</span>
+                Founded: <span>{teamAndVenue.team.founded}</span>
               </p>
             )}
-            {props.selectedTeam.team.national && <p>National team</p>}
+            {teamAndVenue.team.national && <p>National team</p>}
           </FlexedColumnContainer>
           <FlexedColumnContainer>
             <h3>Venue</h3>
-            {props.selectedTeam.venue.name && (
+            {teamAndVenue.venue.name && (
               <p>
-                Stadium: <span>{props.selectedTeam.venue.name}</span>
+                Stadium: <span>{teamAndVenue.venue.name}</span>
               </p>
             )}
-            {props.selectedTeam.venue.address && (
+            {teamAndVenue.venue.address && (
               <p>
-                Address: <span>{props.selectedTeam.venue.address}</span>
+                Address: <span>{teamAndVenue.venue.address}</span>
               </p>
             )}
-            {props.selectedTeam.venue.city && (
+            {teamAndVenue.venue.city && (
               <p>
-                City: <span>{props.selectedTeam.venue.city}</span>
+                City: <span>{teamAndVenue.venue.city}</span>
               </p>
             )}
-            {props.selectedTeam.venue.capacity && (
+            {teamAndVenue.venue.capacity && (
               <p>
-                Capacity: <span>{props.selectedTeam.venue.capacity}</span>
+                Capacity: <span>{teamAndVenue.venue.capacity}</span>
               </p>
             )}
           </FlexedColumnContainer>
           {/* TODO ask Oz why it still shows */}
-          {props.selectedTeam.venue.image && (
+          {teamAndVenue.venue.image && (
             <StyledBigImg
-              src={props.selectedTeam.venue.image}
+              src={teamAndVenue.venue.image}
               alt={"stadium"}
             ></StyledBigImg>
           )}

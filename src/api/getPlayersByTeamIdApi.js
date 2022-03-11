@@ -1,6 +1,6 @@
 import baseApi from "./baseApi";
 
-export default function getPlayersByTeamIdApi(id) {
+export default async function getPlayersByTeamIdApi(id) {
   return baseApi.get("players/squads/", {
     params: { team: id },
   });

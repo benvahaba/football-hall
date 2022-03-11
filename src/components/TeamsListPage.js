@@ -5,13 +5,15 @@ import TeamsListBody from "./TeamsListBody";
 import TeamRowContainer from "./TeamRowContainer";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function TeamsListPage(props) {
   const teamsList = useSelector((state) => state.payload);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log("teamsList", teamsList);
-  }, [teamsList]);
+  function onTeamChosenHandle(teamId) {
+    navigate(`/teams/${teamId}`);
+  }
 
   return (
     <StyledTeamsListPage>
@@ -22,7 +24,7 @@ function TeamsListPage(props) {
             <TeamRowContainer
               key={teamFromList.team.id}
               teamFromList={teamFromList}
-              onTeamChosenHandle={props.onTeamChosenHandle}
+              onTeamChosenHandle={onTeamChosenHandle}
             />
           );
         })}

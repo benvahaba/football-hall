@@ -1,22 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Routes } from "react-router-dom";
 import routes from "./routes";
 import getTeamByCountryNameApi from "./api/getTeamByCountryNameApi";
-import { createStore } from "redux";
-import reducer from "./store/reducer";
-import { Provider } from "react-redux";
 import { useDispatch } from "react-redux";
 
 function App() {
-  const store = createStore(reducer);
-  const dispacher = useDispatch();
+
+  const dispach = useDispatch();
 
   async function fetchTeams() {
     await getTeamByCountryNameApi("israel")
-      .then((data) => {
-        dispacher({ type: "NEW_TEAMS", payload: data });
-        console.log("data", data);
-      })
+      .then((data) => dispach({ type: "NEW_TEAMS", payload: data }))
       .catch((error) => {
         alert(error.message);
       });
@@ -24,11 +18,7 @@ function App() {
 
   fetchTeams();
 
-  return (
-    <Provider store={store}>
-      <Routes>{routes()}</Routes>
-    </Provider>
-  );
+  return <Routes>{routes()}</Routes>;
 }
 
 export default App;

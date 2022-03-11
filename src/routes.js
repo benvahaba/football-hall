@@ -1,7 +1,7 @@
 import FocusedTeamPage from "./components/FocusedTeamPage";
 import TeamsListPage from "./components/TeamsListPage";
 
-import { Navigate, Route } from "react-router-dom";
+import { matchRoutes, Navigate, Route } from "react-router-dom";
 
 const routes = () => [
   <Route key={"/"} path={"/" || "/teams"} exact element={<TeamsListPage />} />,

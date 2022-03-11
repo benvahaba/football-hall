@@ -6,7 +6,7 @@ function TeamRowContainer(props) {
   return (
     <StyledTeamRowContainer
       onClick={() => {
-        props.onTeamChosenHandle(props.teamFromList);
+        props.onTeamChosenHandle(props.teamFromList.team.id);
       }}
     >
       <>
