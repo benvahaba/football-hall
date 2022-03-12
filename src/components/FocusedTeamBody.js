@@ -1,5 +1,14 @@
 import React from "react";
-import StyledFocusedTeamBody from "./styles/FocusedTeamBody.styles";
+import styled from "styled-components";
+
+const StyledFocusedTeamBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  height: fit-content;
+  padding: 1rem;
+`;
 
 function FocusedTeamBody(props) {
   return <StyledFocusedTeamBody>{props.children}</StyledFocusedTeamBody>;

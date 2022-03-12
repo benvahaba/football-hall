@@ -1,5 +1,12 @@
 import React from "react";
-import StyledFlexedColumnContainer from "./styles/FlexedColumnContainer.styled";
+import styled from "styled-components";
+
+const StyledFlexedColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+`;
 
 function FlexedColumnContainer(props) {
   return (
