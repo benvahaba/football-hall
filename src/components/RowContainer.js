@@ -7,14 +7,21 @@ const StyledRowContainer = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
-  padding-top: 0.5rem;
+  padding: 0.5rem;
+  &:nth-child(odd) {
+    background-color: #e7e9eb;
+  }
+  &:nth-child(even) {
+    background-color: #fff;
+  }
 
   transition: all 0.5s;
 
   :hover {
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.5);
     color: white;
-    transform: scale(105%);
+    font-weight: 600;
+
     cursor: pointer;
   }
 `;
